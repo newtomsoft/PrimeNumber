@@ -1,39 +1,26 @@
-using PrimeNumberApp;
-using System.Collections.Generic;
-using Xunit;
+namespace PrimeNumberTests;
 
-namespace PrimeNumberTests
+#region test data generator
+public class TestDataGenerator : IEnumerable<object[]>
 {
-    public class PrimeNumber_FromToShould
+    private readonly List<object[]> _data = new()
     {
-        [Fact]
-        public void Return2whenFrom1To2()
-        {
-            Assert.Equal(new List<ulong>() { 2 }, PrimeNumber.FromTo(1,2));
-        }
+        new object[] { 1, 2, new List<ulong>() { 2 } },
+        new object[] { 1, 3, new List<ulong>() { 2, 3 } },
+        new object[] { 1, 4, new List<ulong>() { 2, 3 } },
+        new object[] { 1, 5, new List<ulong>() { 2, 3, 5 } },
+        new object[] { 1, 100, new List<ulong>() { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 } },
+    };
 
-        [Fact]
-        public void Return2_3whenFrom1To3()
-        {
-            Assert.Equal(new List<ulong>() { 2, 3 }, PrimeNumber.FromTo(1,3));
-        }
+    public IEnumerator<object[]> GetEnumerator() => _data.GetEnumerator();
 
-        [Fact]
-        public void Return2_3whenFrom1To4()
-        {
-            Assert.Equal(new List<ulong>() { 2, 3 }, PrimeNumber.FromTo(1, 4));
-        }
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+}
+#endregion
 
-        [Fact]
-        public void Return2_3_5whenFrom1To5()
-        {
-            Assert.Equal(new List<ulong>() { 2, 3, 5 }, PrimeNumber.FromTo(1, 5));
-        }
-
-        [Fact]
-        public void ReturnGoodListwhenFrom1To100()
-        {
-            Assert.Equal(new List<ulong>() { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97 }, PrimeNumber.FromTo(1, 100));
-        }
-    }
+public class PrimeNumberFromToShould
+{
+    [Theory]
+    [ClassData(typeof(TestDataGenerator))]
+    public void Return(ulong from, ulong to, List<ulong> expectedReturn) => PrimeNumber.FromTo(from, to).ShouldBe(expectedReturn);
 }

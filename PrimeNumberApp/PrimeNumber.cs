@@ -1,31 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
+﻿namespace PrimeNumberApp;
 
-namespace PrimeNumberApp
+public static class PrimeNumber
 {
-    public static class PrimeNumber
+    public static bool IsPrime(ulong number)
     {
-        public static bool IsPrime(ulong number)
-        {
-            var computeLimit = (ulong)Math.Sqrt(number);
-            for (ulong numberTested = 2; numberTested <= computeLimit; numberTested++)
-            {
-                if (number % numberTested == 0)
-                    return false;
-            }
-            return true;
-        }
+        ulong computeLimit = (ulong)Math.Sqrt(number);
+        for (ulong numberTested = 2; numberTested <= computeLimit; numberTested++)
+            if (number % numberTested == 0) return false;
 
-        public static IEnumerable<ulong> FromTo(ulong from, ulong to)
-        {
-            if (from < 2) from = 2; 
-            for (ulong numberTested = from; numberTested < to; numberTested++)
-            {
-                if (IsPrime(numberTested))
-                    yield return numberTested;
-            }
-            if (IsPrime(to))
-                yield return to;
-        }
+        return true;
+    }
+
+    public static IEnumerable<ulong> FromTo(ulong from, ulong to)
+    {
+        if (from < 2) from = 2;
+        for (ulong numberTested = from; numberTested <= to; numberTested++)
+            if (IsPrime(numberTested)) yield return numberTested;
     }
 }

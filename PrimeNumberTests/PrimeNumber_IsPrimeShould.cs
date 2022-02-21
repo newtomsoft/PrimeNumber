@@ -1,63 +1,20 @@
-﻿using PrimeNumberApp;
-using Xunit;
+﻿namespace PrimeNumberTests;
 
-namespace PrimeNumberTests
+public class PrimeNumberIsPrimeShould
 {
-    public class PrimeNumber_IsPrimeShould
-    {
-        [Fact]
-        public void ReturnTrueWhen2()
-        {
-            Assert.True(PrimeNumber.IsPrime(2));
-        }
+    [Theory]
+    [InlineData(2)]
+    [InlineData(3)]
+    [InlineData(5)]
+    [InlineData(7)]
+    [InlineData(97)]
+    [InlineData(47_657_873)]
+    [InlineData(200_021_819)]
+    public void ReturnTrue(ulong number) => PrimeNumber.IsPrime(number).ShouldBeTrue();
 
-        [Fact]
-        public void ReturnTrueWhen3()
-        {
-            Assert.True(PrimeNumber.IsPrime(3));
-        }
 
-        [Fact]
-        public void ReturnFalseWhen4()
-        {
-            Assert.False(PrimeNumber.IsPrime(4));
-        }
-
-        [Fact]
-        public void ReturnTrueWhen5()
-        {
-            Assert.True(PrimeNumber.IsPrime(5));
-        }
-
-        [Fact]
-        public void ReturnTrueWhen7()
-        {
-            Assert.True(PrimeNumber.IsPrime(7));
-        }
-
-        [Fact]
-        public void ReturnTrueWhen97()
-        {
-            Assert.True(PrimeNumber.IsPrime(97));
-        }
-
-        [Fact]
-        public void ReturnTrueWhen47_657_873()
-        {
-            Assert.True(PrimeNumber.IsPrime(47_657_873));
-        }
-
-        [Fact]
-        public void ReturnFalseWhen47_657_879()
-        {
-            Assert.False(PrimeNumber.IsPrime(47_657_879));
-        }
-
-        [Fact]
-        public void ReturnTrueWhen200_021_819()
-        {
-            Assert.True(PrimeNumber.IsPrime(200_021_819));
-        }
-        
-    }
+    [Theory]
+    [InlineData(4)]
+    [InlineData(47_657_879)]
+    public void ReturnFalse(ulong number) => PrimeNumber.IsPrime(number).ShouldBeFalse();
 }
